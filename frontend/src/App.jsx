@@ -8,11 +8,16 @@ import Home from './home/pages/home.jsx'
 import AuthWrapper from './authentication/components/authWrapper.jsx'
 
 import { AuthContextProvider } from './authentication/context/authContext.jsx'
+import { UserContextProvider } from './user/context/userContext.jsx'
 
 const router = createBrowserRouter([
   {
     path:'',
     element:<AuthWrapper><Home /></AuthWrapper>
+  },
+  {
+    path:'profile',
+    element:<h1>setup profile first</h1>
   },
   {
     path:'login',
@@ -32,9 +37,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <AuthContextProvider>
-      <RouterProvider router={router} />
-    </AuthContextProvider>
+    <UserContextProvider>
+      <AuthContextProvider>
+        <RouterProvider router={router} />
+      </AuthContextProvider>
+    </UserContextProvider>
   )
 }
 
