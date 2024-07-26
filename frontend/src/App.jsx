@@ -6,7 +6,7 @@ import Signup,{SignupAction} from './authentication/pages/signup.jsx'
 import Logout from './authentication/pages/logout.jsx'
 import Home from './home/pages/home.jsx'
 import ProfilePreview from './profile/pages/preview.jsx'
-import ProfileCreation from './profile/pages/create.jsx'
+import ProfileCreation,{ProfileCreationAction} from './profile/pages/create.jsx'
 
 import AuthWrapper from './authentication/components/authWrapper.jsx'
 
@@ -23,7 +23,8 @@ const router = createBrowserRouter([
   },
   {
     path:'profile/create/',
-    element:<ProfileCreation />
+    element:<ProfileCreation />,
+    action:ProfileCreationAction
   },
   {
     path:'profile/:id',

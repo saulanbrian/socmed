@@ -15,4 +15,4 @@ def check_setup_status(sender,instance,**kwargs):
   if bool(instance.profile):
     instance.account_status = 'ACTIVE'
   else:
-    instance.account_status = 'DRAFT'
+    instance.account_status = 'HOLD'

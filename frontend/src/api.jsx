@@ -7,10 +7,10 @@ const backendUrl = import.meta.env.VITE_API_URL
 async function refreshToken(){
   const refresh = localStorage.getItem('REFRESH_TOKEN','')
   try {
-    const res = await axios.post(backendUrl,{
+    const res = await axios.post(`${backendUrl}/auth/token/refresh/`,{
       refresh:refresh
       })
-    return res.data
+    return res.data.access
   }catch(e){
     console.log(e.response)
     return null
@@ -33,6 +33,8 @@ api.interceptors.request.use(
       }
       config.headers.Authorization = `Bearer ${access}`
     }
+    
+    console.log(config)
     
     return config
   }
