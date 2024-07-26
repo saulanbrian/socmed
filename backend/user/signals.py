@@ -12,7 +12,7 @@ def hash_password(sender,instance,created,**kwargs):
 
 @receiver(pre_save,sender=CustomUser)
 def check_setup_status(sender,instance,**kwargs):
-  if bool(instance.in_app_username) and instance.in_app_username is not None:
+  if bool(instance.profile):
     instance.setup_complete = True
   else:
     instance.setup_complete = False

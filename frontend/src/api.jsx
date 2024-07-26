@@ -3,7 +3,6 @@ import axios from 'axios';
 import {jwtDecode} from 'jwt-decode'
 
 const backendUrl = import.meta.env.VITE_API_URL
-console.log(backendUrl)
 
 async function refreshToken(){
   const refresh = localStorage.getItem('REFRESH_TOKEN','')

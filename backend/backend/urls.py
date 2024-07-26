@@ -10,7 +10,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/token/',TokenObtainPairView.as_view()),
     path('auth/token/refresh/',TokenRefreshView.as_view()),
-    path('user/',include('user.urls'))
+    path('user/',include('user.urls')),
+    path('profile/',include('user_profile.urls'))
 ]
 
 if settings.DEBUG:

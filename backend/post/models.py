@@ -4,7 +4,7 @@ import uuid
 from user.models import CustomUser
 
 def construct_path(instance,filename):
-  return 'user_{0}/posts/post_{1}/{2}'.format(instance.author.id,instance.id,filename)
+  return 'user_{0}/posts/post_{1}/{2}'.format(instance.author.username,instance.id,filename)
 
 class Post(models.Model):
   id = models.UUIDField(default=uuid.uuid4,primary_key=True)

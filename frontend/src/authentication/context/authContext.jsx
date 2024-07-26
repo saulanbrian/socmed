@@ -1,5 +1,5 @@
 import { createContext, useContext, useState,useEffect } from 'react'
-import { useUserContext } from '../../user/context/userContext.jsx'
+import { useUserStore } from '../../user/store/userstore.jsx'
 import { jwtDecode } from 'jwt-decode'
 
 
@@ -11,7 +11,7 @@ export const useAuthContext = () => {
 
 export const AuthContextProvider = ({children}) => {
   
-  const userInfo = useUserContext()
+  const userStore = useUserStore()
   
   const refresh = Boolean(localStorage.getItem('REFRESH_TOKEN'))
   const [isAuthenticated,setIsAuthenticated] = useState(refresh)
@@ -20,11 +20,8 @@ export const AuthContextProvider = ({children}) => {
     const decoded = jwtDecode(access)
     localStorage.setItem('ACCESS_TOKEN',access)
     localStorage.setItem('REFRESH_TOKEN',refresh)
-    userInfo.setUsername(decoded?.in_app_username || null)
-    userInfo.setProfile(decoded?.profile || null)
-    if (decoded.setup_complete){
-      userInfo.setSetupComplete(true)
-    }
+    userStore.setDisplayName(decoded.display_name)
+    userStore.setProfilePicture(decoded.profile_picture)
     setIsAuthenticated(true)
   }
   

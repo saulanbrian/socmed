@@ -5,11 +5,12 @@ from .models import CustomUser
 
 from django.contrib.auth.password_validation import validate_password
 
+
 class UserSerializer(serializers.ModelSerializer):
   
   class Meta:
     model = CustomUser
-    fields = ['username','password']
+    fields = ['id','username','password']
     extra_kwargs = {
         'password':{'write_only':True}
     }
@@ -19,11 +20,21 @@ class UserSerializer(serializers.ModelSerializer):
     return value
     
 
-
 def get_user_profile(user):
-  if user.profile:
-    return user.profile.url
-  return None
+  try:
+    if user.profile.picture:
+      return user.profile.picture.url
+    else:
+      return None
+  except AttributeError:
+    return None
+
+def get_user_display_name(user):
+  try:
+    return user.profile.display_name
+  except AttributeError:
+    return None
+
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
   
@@ -32,7 +43,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     token = super().get_token(user)
     
     token['setup_complete'] = user.setup_complete
-    token['profile'] = get_user_profile(user)
-    token['in_app_username'] = user.in_app_username or None
+    token['profile_picture'] = get_user_profile(user)
+    token['display_name'] = get_user_display_name(user)
     
     return token
