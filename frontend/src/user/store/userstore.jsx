@@ -9,6 +9,11 @@ const actions = (set) => ({
     }
     ),
   setProfilePicture:(url) => set({profilePicture:url}),
+  reset:() => set({
+    displayName: null,
+    profilePicture:null,
+    setupComplete:false
+  })
 })
 
 export const useUserStore = create(

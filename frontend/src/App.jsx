@@ -19,7 +19,7 @@ const router = createBrowserRouter([
   },
   {
     path:'profile',
-    element:<h1>you are here because you already have a profile</h1>,
+    element:<AuthWrapper><h1>you are here because you already have a profile</h1></AuthWrapper>,
   },
   {
     path:'profile/create/',
