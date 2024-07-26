@@ -42,7 +42,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
   def get_token(cls,user):
     token = super().get_token(user)
     
-    token['setup_complete'] = user.setup_complete
+    token['account_status'] = user.account_status
     token['profile_picture'] = get_user_profile(user)
     token['display_name'] = get_user_display_name(user)
     

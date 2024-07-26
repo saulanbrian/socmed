@@ -22,6 +22,7 @@ export const AuthContextProvider = ({children}) => {
     localStorage.setItem('REFRESH_TOKEN',refresh)
     userStore.setDisplayName(decoded.display_name)
     userStore.setProfilePicture(decoded.profile_picture)
+    userStore.setAccountStatus(decoded.account_status)
     setIsAuthenticated(true)
   }
   

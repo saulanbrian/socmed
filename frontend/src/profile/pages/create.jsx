@@ -7,10 +7,10 @@ import { Navigate } from 'react-router-dom'
 
 export default function ProfileCreation(){
   const { isAuthenticated } = useAuthContext()
-  const { setupComplete } = useUserStore()
+  const { accountStatus } = useUserStore()
 
   if (isAuthenticated){
-    return setupComplete? <Navigate to='/profile' />: <h1>this is a profile creation form</h1>
+    return accountStatus === 'ACTIVE'? <Navigate to='/profile' />: <h1>this is a profile creation form</h1>
   }else{
     return <Navigate to='/login' />
   }

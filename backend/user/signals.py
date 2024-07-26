@@ -13,6 +13,6 @@ def hash_password(sender,instance,created,**kwargs):
 @receiver(pre_save,sender=CustomUser)
 def check_setup_status(sender,instance,**kwargs):
   if bool(instance.profile):
-    instance.setup_complete = True
+    instance.account_status = 'ACTIVE'
   else:
-    instance.setup_complete = False
+    instance.account_status = 'DRAFT'

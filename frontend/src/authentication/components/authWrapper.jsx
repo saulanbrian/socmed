@@ -4,10 +4,10 @@ import { useNavigate,Navigate } from 'react-router-dom'
 
 export default function AuthWrapper({children}){
   const { isAuthenticated } = useAuthContext()
-  const { setupComplete } = useUserStore()
+  const { accountStatus } = useUserStore()
   
   if (isAuthenticated){
-    return setupComplete? children: <Navigate to='profile/create' />
+    return accountStatus === 'ACTIVE'? children: <Navigate to='/profile/create' />
   }else{
     return <Navigate to='/login' />
   }
