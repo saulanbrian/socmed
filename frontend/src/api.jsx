@@ -34,8 +34,6 @@ api.interceptors.request.use(
       config.headers.Authorization = `Bearer ${access}`
     }
     
-    console.log(config)
-    
     return config
   }
   )

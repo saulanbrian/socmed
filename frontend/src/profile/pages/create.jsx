@@ -9,16 +9,25 @@ import ProfileCreationForm from '../components/creationform.jsx'
 
 export default function ProfileCreation(){
   const { isAuthenticated } = useAuthContext()
-  const { accountStatus } = useUserStore()
+  const userStore = useUserStore()
   
   const data = useActionData()
 
   useEffect(() => {
-    data && console.log(data)
+    if(data){
+      data?.error && console.log(data.error)
+      
+      if (data?.data && data?.status === 201) {
+        userStore.setDisplayName(data.data?.display_name || null)
+        userStore.setProfilePicture(data.data?.picture || null)
+        userStore.setDescription(data.data?.description || null)
+        userStore.setAccountStatus('ACTIVE')
+      }
+    }
   },[data])
 
   if (isAuthenticated){
-    return accountStatus === 'ACTIVE'? <Navigate to='/profile' />: <ProfileCreationForm />
+    return userStore.accountStatus === 'ACTIVE'? <Navigate to='/profile' />: <ProfileCreationForm />
   }else{
     return <Navigate to='/login' />
   }
@@ -32,14 +41,13 @@ export const ProfileCreationAction = async({request}) => {
   const displayName = formData.get('displayName')
   const description = formData.get('description')
   
-  console.log(api)
-  
   try{
     const res = await api.post('profile/create',{
       display_name:displayName,
       description:description
       })
-    return res.data
+    const { data, status } = res
+    return { data, status }
   }catch(e){
     return {error:e.response.data}
   }
