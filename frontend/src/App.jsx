@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Login,{LoginAction} from './authentication/pages/login.jsx'
 import Signup,{SignupAction} from './authentication/pages/signup.jsx'
 import Logout from './authentication/pages/logout.jsx'
-import Home from './home/pages/home.jsx'
+import Feed from './post/pages/feed.jsx'
 import ProfilePreview from './profile/pages/preview.jsx'
 import ProfileCreation,{ProfileCreationAction} from './profile/pages/create.jsx'
 
@@ -15,7 +15,7 @@ import { AuthContextProvider } from './authentication/context/authContext.jsx'
 const router = createBrowserRouter([
   {
     path:'',
-    element:<AuthWrapper><Home /></AuthWrapper>
+    element:<AuthWrapper><Feed /></AuthWrapper>
   },
   {
     path:'profile',
