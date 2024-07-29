@@ -12,3 +12,7 @@ class PostListCreateView(ListCreateAPIView):
   serializer_class = PostSerializer
   permission_classes = [IsAuthenticated]
   queryset = Post.objects.all()
+  
+  def perform_create(self,serializer):
+    serializer.save(author=self.request.user)
+    

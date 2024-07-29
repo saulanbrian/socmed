@@ -2,6 +2,8 @@ import { useGetPosts } from '../queries/posts.jsx'
 
 import Post from '../components/post.jsx'
 
+import PostCreationButton from '../components/postcreationbutton.jsx'
+
 function Feed(){
   const {isLoading,data:posts,isError} = useGetPosts()
   
@@ -19,6 +21,7 @@ function Feed(){
             <p>you're all caught up</p>
           )
       }
+      <PostCreationButton />
     </>
     )
 }

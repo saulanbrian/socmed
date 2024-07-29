@@ -10,6 +10,8 @@ async function refreshToken(){
     const res = await axios.post(`${backendUrl}/auth/token/refresh/`,{
       refresh:refresh
       })
+    localStorage.setItem('REFRESH_TOKEN',res.data.refresh)
+    localStorage.setItem('ACCESS_TOKEN',res.data.access)
     return res.data.access
   }catch(e){
     console.log(e.response)

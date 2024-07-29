@@ -7,6 +7,7 @@ import Logout from './authentication/pages/logout.jsx'
 import Feed from './post/pages/feed.jsx'
 import ProfilePreview from './profile/pages/preview.jsx'
 import ProfileCreation,{ProfileCreationAction} from './profile/pages/create.jsx'
+import PostCreationPage from './post/pages/postcreation.jsx'
 
 import AuthWrapper from './authentication/components/authWrapper.jsx'
 
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path:'',
     element:<AuthWrapper><Feed /></AuthWrapper>
+  },
+  {
+    path:'post/create',
+    element:<AuthWrapper><PostCreationPage /></AuthWrapper>
   },
   {
     path:'profile',
