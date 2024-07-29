@@ -11,17 +11,19 @@ export default function PostCreationPage(){
     isSuccess && navigate('/')
   },[isSuccess])
   
+  error && console.log(error)
+  
   function handleSubmit(e){
     e.preventDefault()
-    const data = e.target
-    const caption = data.caption.value
-    mutate({caption:caption})
+    const formData = new FormData(e.target)
+    mutate(formData)
   }
   
   
   return (
       <form onSubmit={handleSubmit}>
         <input name='caption' placeholder='caption' />
+        <input type='file' name='image'/>
         <button type='submit' >create</button>
       </form>
     )

@@ -15,7 +15,7 @@ function Feed(){
       {
         posts.length >= 1? (
             posts.map(post => (
-              <Post key={post.id} />
+              <Post key={post.id} caption={post.caption} />
             ))
           ):(
             <p>you're all caught up</p>

@@ -1,3 +1,5 @@
-export default function Post(){
-  return <h1>this is a post</h1>
+export default function Post({caption}){
+  return (
+    <h1>{caption}</h1>
+    )
 }

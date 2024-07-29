@@ -23,10 +23,12 @@ export const useCreatePost = () => {
   
   return useMutation({
     mutationKey:['posts'],
-    mutationFn:async({caption}) => {
-      const res = await api.post('posts/',{
-        caption:caption
-      })
+    mutationFn:async(formData) => {
+      const res = await api.post('posts/',formData,{
+        headers:{
+          'Content-Type':'multipart/form-data'
+        }
+        })
       return res.data
     },
     onSuccess:(post) => {
