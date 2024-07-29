@@ -11,3 +11,4 @@ class Post(models.Model):
   author = models.ForeignKey(CustomUser,related_name='posts',on_delete=models.CASCADE)
   caption = models.TextField(max_length=200)
   image = models.ImageField(upload_to=construct_path,null=True)
+  likes = models.ManyToManyField(CustomUser)
