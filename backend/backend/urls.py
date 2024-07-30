@@ -12,7 +12,8 @@ urlpatterns = [
     path('auth/token/refresh/',TokenRefreshView.as_view()),
     path('user/',include('user.urls')),
     path('profile/',include('user_profile.urls')),
-    path('posts/',include('post.urls'))
+    path('posts/',include('post.urls')),
+    path('comment/',include('comment.urls'))
 ]
 
 if settings.DEBUG:

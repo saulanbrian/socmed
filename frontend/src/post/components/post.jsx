@@ -2,9 +2,10 @@ import { useEffect,useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLikePost, useUnlikePost } from '../queries/likedposts.jsx'
 
-export default function Post({caption, id, isLiked}){
+export default function Post({caption, id, isLiked, likeCounts, image}){
   
   const [liked,setLiked] = useState(isLiked)
+  const [likes,setLikes] = useState(likeCounts)
   
   const {
     error:likeFailed,
@@ -20,21 +21,17 @@ export default function Post({caption, id, isLiked}){
     mutate:unlike
   } = useUnlikePost()
   
-  function handleClick(e){
+  async function handleClick(e){
     e.preventDefault();
-    if(liked) { 
-      unlike(id)
-      setLiked(false)
-    }
-    else{
-      like(id)
-      setLiked(true)
-    }
+    liked? await unlike(id): await like(id)
+    liked? setLikes(prev => prev - 1): setLikes(prev => prev + 1)
+    setLiked(!liked)
   }
   
   return (
     <>
     <h1>{caption}</h1>
+    <p>likes: {likes} </p>
     <button onClick={handleClick}
             disabled={unliking || liking}>
       {liked?'unlike':'like'}

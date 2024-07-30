@@ -19,7 +19,9 @@ function Feed(){
               <Post key={post.id} 
                     caption={post.caption}
                     id={post.id}
-                    isLiked={post.is_liked}/>
+                    isLiked={post.is_liked}
+                    likeCounts={post.like_counts}
+                    image={post.image}/>
             ))
           ):(
             <p>you're all caught up</p>

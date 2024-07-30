@@ -18,7 +18,9 @@ export default function LikedPostContainer(){
             <Post key={post.id}
                   caption={post.caption}
                   isLiked={post.is_liked}
-                  id={post.id} />
+                  id={post.id}
+                  likeCounts={post.like_counts}
+                  image={post.image}/>
           ))
       }
     </div>

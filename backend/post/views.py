@@ -27,10 +27,10 @@ class PostListCreateView(ListCreateAPIView):
 def like_unlike_post(request,pk):
   post = get_object_or_404(Post,pk=pk)
     
-  if request.user in post.likes.all():
-    post.likes.remove(request.user)
+  if request.user in post.likers.all():
+    post.likers.remove(request.user)
   else:
-    post.likes.add(request.user)
+    post.likers.add(request.user)
   
   serializer = PostSerializer(post,context={
     'request':request
@@ -44,6 +44,6 @@ class LikedPostListView(ListAPIView):
   
   def get_queryset(self):
     user = self.request.user.id
-    return Post.objects.filter(likes__id=user)
+    return Post.objects.filter(likers__id=user)
   
   
