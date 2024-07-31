@@ -13,7 +13,8 @@ urlpatterns = [
     path('user/',include('user.urls')),
     path('profile/',include('user_profile.urls')),
     path('posts/',include('post.urls')),
-    path('comment/',include('comment.urls'))
+    path('comment/',include('comment.urls')),
+    path('shared_post/',include('sharedpost.urls'))
 ]
 
 if settings.DEBUG:

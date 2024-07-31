@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'post.apps.PostConfig',
     'user_profile.apps.UserProfileConfig',
-    'comment.apps.CommentConfig'
+    'comment.apps.CommentConfig',
+    'sharedpost.apps.SharedpostConfig'
 ]
 
 MIDDLEWARE = [
