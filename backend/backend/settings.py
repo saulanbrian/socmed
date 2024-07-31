@@ -37,6 +37,7 @@ REST_FRAMEWORK = {
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'user.apps.UserConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,7 +51,8 @@ INSTALLED_APPS = [
     'post.apps.PostConfig',
     'user_profile.apps.UserProfileConfig',
     'comment.apps.CommentConfig',
-    'sharedpost.apps.SharedpostConfig'
+    'sharedpost.apps.SharedpostConfig',
+    'notification.apps.NotificationConfig'
 ]
 
 MIDDLEWARE = [
@@ -83,7 +85,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
-
+ASGI_APPLICATION = 'backend.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
