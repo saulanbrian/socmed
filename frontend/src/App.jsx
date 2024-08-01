@@ -8,6 +8,7 @@ import Feed from './post/pages/feed.jsx'
 import ProfilePreview from './profile/pages/preview.jsx'
 import ProfileCreation,{ProfileCreationAction} from './profile/pages/create.jsx'
 import PostCreationPage from './post/pages/postcreation.jsx'
+import Navigation from './core/components/navigation.jsx'
 
 import AuthWrapper from './authentication/components/authWrapper.jsx'
 
@@ -15,16 +16,22 @@ import { AuthContextProvider } from './authentication/context/authContext.jsx'
 
 const router = createBrowserRouter([
   {
-    path:'',
-    element:<AuthWrapper><Feed /></AuthWrapper>
-  },
-  {
-    path:'post/create',
-    element:<AuthWrapper><PostCreationPage /></AuthWrapper>
-  },
-  {
-    path:'profile',
-    element:<AuthWrapper><h1>you are here because you already have a profile</h1></AuthWrapper>,
+    path:'/',
+    element:<AuthWrapper><Navigation /></AuthWrapper>,
+    children:[
+      {
+        path:'',
+        element:<Feed />
+      },
+      {
+        path:'post/create',
+        element:<AuthWrapper><PostCreationPage /></AuthWrapper>
+      },
+      {
+        path:'profile',
+        element:<AuthWrapper><h1>you are here because you already have a profile</h1></AuthWrapper>,
+      },
+      ]
   },
   {
     path:'profile/create/',

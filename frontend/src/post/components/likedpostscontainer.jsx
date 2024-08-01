@@ -20,7 +20,10 @@ export default function LikedPostContainer(){
                   isLiked={post.is_liked}
                   id={post.id}
                   likeCounts={post.like_counts}
-                  image={post.image}/>
+                  image={post.image}
+                  authorName={post.author_name}
+                  authorProfile={post.author_profile}
+                  authorId={post.author_id}/>
           ))
       }
     </div>
