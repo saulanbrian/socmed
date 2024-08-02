@@ -17,35 +17,57 @@ import FavoriteSharpIcon from '@mui/icons-material/FavoriteSharp';
 import ChatBubbleOutlineSharpIcon from '@mui/icons-material/ChatBubbleOutlineSharp';
 import SendSharpIcon from '@mui/icons-material/SendSharp';
 
+import CommentButton from '../../comment/components/commentButton.jsx'
+import CommentCollapse from '../../comment/components/collapse.jsx'
+
 import { useEffect,useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLikePost, useUnlikePost } from '../queries/likedposts.jsx'
+import { useMediaQuery } from '@mui/material'
 
 import { styled } from '@mui/system'
 
+import './post.css'
+
 
 const StyledCard = styled(Card)({
-  maxWidth:400,
-  margin:'3px 0',
-  boxShadow:'none'
+  boxShadow:'none',
+  marginBottom:3,
+  maxWidth:400
 })
 
 const StyledCardActions = styled(CardActions)({
   borderTop:'1px solid #353535cf',
   padding:1,
-  justifyContent:'space-between'
+  '& > *':{
+    flex:1
+  }
+})
+
+const StyledButton = styled(Button)({
+  fontWeight:'Light',
+  textTransform:'none'
 })
 
 const titleProps = {
   fontSize:'1rem'
 }
 
+
 export default function Post({caption, id, isLiked, likeCounts, image, authorProfile,authorName,authorId}){
   
   const baseUrl = import.meta.env.VITE_API_URL
   
+  const collapseComment = useMediaQuery((theme) => theme.breakpoints.up('sm'))
+  
   const [liked,setLiked] = useState(isLiked)
   const [likes,setLikes] = useState(likeCounts)
+  
+  const [collapse,setCollapse] = useState(false)
+  
+  function openCollapse(){
+    setCollapse(true)
+  }
   
   const {
     error:likeFailed,
@@ -68,6 +90,11 @@ export default function Post({caption, id, isLiked, likeCounts, image, authorPro
     setLiked(!liked)
   }
   
+  function handleCollapse(){
+    setCollapse(!collapse)
+  }
+  
+  
   return (
     <StyledCard component={Box}>
       <CardHeader 
@@ -77,14 +104,15 @@ export default function Post({caption, id, isLiked, likeCounts, image, authorPro
         subheader='dxample'
         titleTypographyProps={titleProps}
         />
-      <CardContent sx={{padding:'0 5px',margin:0}}>
-        <Typography align='left' paragraph variant='body2'>
+      <CardContent sx={{padding:'10px',margin:0}}>
+        <Typography align='left' variant='body2'>
           { caption }
         </Typography>
       </CardContent>
       { 
         image && (
           <CardMedia 
+            className='post-image'
             component='img'
             src={image} 
             height='300'
@@ -92,8 +120,8 @@ export default function Post({caption, id, isLiked, likeCounts, image, authorPro
         )
       }
       <StyledCardActions >
-        <Button 
-          color='inherit'
+        <StyledButton 
+          color={liked? 'primary': 'inherit'}
           onClick={handleClick} 
           disabled={unliking || liking}
           startIcon={ liked? (
@@ -103,15 +131,14 @@ export default function Post({caption, id, isLiked, likeCounts, image, authorPro
             )
           }>
           { likes }
-        </Button>
-        <Button startIcon={<ChatBubbleOutlineSharpIcon />} color='inherit'>
-          comment
-        </Button>
-        <Button color='inherit'
+        </StyledButton>
+        <CommentButton postId={id} clickFn={collapseComment && handleCollapse}/>
+        <StyledButton color='inherit'
                 startIcon={<SendSharpIcon/>}>
           share
-        </Button>
+        </StyledButton>
       </StyledCardActions>
+      { collapseComment && <CommentCollapse isIn={collapse}/>}
     </StyledCard>
     )
 }

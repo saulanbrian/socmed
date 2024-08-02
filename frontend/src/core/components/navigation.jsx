@@ -39,7 +39,7 @@ export default function Nav(){
                       sx={{...mobile,marginRight:'auto'}}>
             <MenuIcon />
           </IconButton>
-          <Button color='inherit' sx={{...desktop}}>
+          <Button color='inherit' sx={{...desktop,marginLeft:'auto'}}>
             profile
           </Button>
           <AvatarButton/>

@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 import Login,{LoginAction} from './authentication/pages/login.jsx'
 import Signup,{SignupAction} from './authentication/pages/signup.jsx'
@@ -59,14 +60,17 @@ const router = createBrowserRouter([
   ])
   
 const client = new QueryClient()
+const theme = createTheme()
 
 function App() {
   return (
-    <AuthContextProvider>
-      <QueryClientProvider client={client}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
-    </AuthContextProvider>
+    <ThemeProvider theme={theme} >
+      <AuthContextProvider>
+        <QueryClientProvider client={client}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </AuthContextProvider>
+    </ThemeProvider>
   )
 }
 
