@@ -11,3 +11,15 @@ export const useGetComments = (postId) => {
     }
   })
 }
+
+export const useAddComment = (postId) => {
+  return useMutation({
+    mutationKey:['post',postId,'comments'],
+    mutationFn:async(text) => {
+      const res = await api.post(`posts/${postId}}/comments/`,{
+        text:text
+      })
+      return res.data
+    }
+  })
+}

@@ -138,7 +138,14 @@ export default function Post({caption, id, isLiked, likeCounts, image, authorPro
           share
         </StyledButton>
       </StyledCardActions>
-      { collapseComment && <CommentCollapse isIn={collapse}/>}
+      { 
+        collapseComment && (
+        <CommentCollapse 
+          isIn={collapse}
+          postId={id}
+          />
+        )
+      }
     </StyledCard>
     )
 }

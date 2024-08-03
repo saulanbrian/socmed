@@ -37,6 +37,9 @@ class PostCommentsListCreateView(ListCreateAPIView):
     post = get_object_or_404(Post,pk=post_id)
     return post.comments.all()
     
+  def perform_create(self,serializer):
+    serializer.save(author=self.request.user)
+    
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

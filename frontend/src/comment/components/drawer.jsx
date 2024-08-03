@@ -1,6 +1,7 @@
 import React from 'react';
 import { SwipeableDrawer, List } from '@mui/material';
 import Comment from './comment.jsx'
+import CommentInput from './createInput.jsx'
 
 import { styled } from '@mui/system';
 
@@ -49,6 +50,7 @@ export default function CommentDrawer({ open, onClose ,postId}) {
           ): <p>there are no comments yet</p>
         }
       </List>
+      <CommentInput postId={postId}/>
     </StyledDrawer>
   );
 }

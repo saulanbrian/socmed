@@ -20,6 +20,12 @@ class CommentSerializer(serializers.ModelSerializer):
       'text',
       'like_counts'
       )
+    extra_kwargs = {
+      'author_id':{'read_only':True},
+      'author_name':{'read_only':True},
+      'author_profile':{'read_only':True},
+      'like_counts':{'read_only':True},
+    }
     
   def get_author_id(self,obj):
     return obj.author.id
