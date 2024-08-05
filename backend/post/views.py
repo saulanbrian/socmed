@@ -17,7 +17,6 @@ from comment.pagination import CommentPagination
 from .models import Post
 
 
-
 class PostListCreateView(ListCreateAPIView):
   serializer_class = PostSerializer
   permission_classes = [IsAuthenticated]
@@ -31,14 +30,18 @@ class PostListCreateView(ListCreateAPIView):
 class PostCommentsListCreateView(ListCreateAPIView):
   serializer_class = CommentSerializer
   pagination_class = CommentPagination
+  parser_classes = [MultiPartParser,FormParser]
   
   def get_queryset(self):
-    post_id = self.kwargs.get('pk')
+    post_id = self.kwargs.get('pk',None)
     post = get_object_or_404(Post,pk=post_id)
     return post.comments.all()
     
   def perform_create(self,serializer):
-    serializer.save(author=self.request.user)
+    post_id = self.kwargs.get('pk',None)
+    post = get_object_or_404(Post,pk=post_id)
+    comment = serializer.save(author=self.request.user)
+    post.comments.add(comment)
     
 
 @api_view(['POST'])

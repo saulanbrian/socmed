@@ -1,16 +1,17 @@
 import React from 'react';
-import { SwipeableDrawer, List } from '@mui/material';
+import { SwipeableDrawer, List, Drawer} from '@mui/material';
 import Comment from './comment.jsx'
-import CommentInput from './createInput.jsx'
+import CommentInput from './commentInput.jsx'
 
 import { styled } from '@mui/system';
 
 import { useGetComments } from '../queries/comments.jsx'
 import { useEffect } from 'react'
 
-const StyledDrawer = styled(SwipeableDrawer)({
+const StyledDrawer = styled(Drawer)({
   '& .MuiDrawer-paper': {
-    minHeight: 400,
+    height:400,
+    maxHeight: 400,
     maxWidth:400
   },
   '& .MuiBackdrop-root':{
@@ -27,15 +28,14 @@ export default function CommentDrawer({ open, onClose ,postId}) {
   
   useEffect(() => {
     data && console.log(data)
+    console.log('re-rendered')
   },[data])
   
   return (
     <StyledDrawer 
       open={open} 
-      onOpen={() => {}}
       onClose={onClose}
-      anchor='bottom'
-      disableSwipeToOpen>
+      anchor='bottom'>
       <List>
         { data && data.results.length >= 1? data.results.map(
           (comment) => (
@@ -45,7 +45,8 @@ export default function CommentDrawer({ open, onClose ,postId}) {
               authorName={comment.author_name}
               authorProfile={comment.author_profile}
               text={comment.text}
-              likes={comment.like_counts} />
+              likes={comment.like_counts}
+              image={comment.image}/>
             )
           ): <p>there are no comments yet</p>
         }

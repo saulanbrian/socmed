@@ -18,6 +18,7 @@ class CommentSerializer(serializers.ModelSerializer):
       'author_name',
       'author_profile',
       'text',
+      'image',
       'like_counts'
       )
     extra_kwargs = {

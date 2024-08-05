@@ -15,7 +15,7 @@ import {
 import FavoriteBorderSharpIcon from '@mui/icons-material/FavoriteBorderSharp';
 import FavoriteSharpIcon from '@mui/icons-material/FavoriteSharp';
 import ChatBubbleOutlineSharpIcon from '@mui/icons-material/ChatBubbleOutlineSharp';
-import SendSharpIcon from '@mui/icons-material/SendSharp';
+import ShareSharpIcon from '@mui/icons-material/ShareSharp';
 
 import CommentButton from '../../comment/components/commentButton.jsx'
 import CommentCollapse from '../../comment/components/collapse.jsx'
@@ -38,6 +38,7 @@ const StyledCard = styled(Card)({
 
 const StyledCardActions = styled(CardActions)({
   borderTop:'1px solid #353535cf',
+  borderBottom:'1px solid #353535cf',
   padding:1,
   '& > *':{
     flex:1
@@ -132,20 +133,14 @@ export default function Post({caption, id, isLiked, likeCounts, image, authorPro
           }>
           { likes }
         </StyledButton>
-        <CommentButton postId={id} clickFn={collapseComment && handleCollapse}/>
-        <StyledButton color='inherit'
-                startIcon={<SendSharpIcon/>}>
+        <CommentButton 
+          postId={id} 
+          clickFn={collapseComment && handleCollapse}/>
+        <StyledButton color='inherit' startIcon={<ShareSharpIcon/>}>
           share
         </StyledButton>
       </StyledCardActions>
-      { 
-        collapseComment && (
-        <CommentCollapse 
-          isIn={collapse}
-          postId={id}
-          />
-        )
-      }
+      { collapseComment && <CommentCollapse isIn={collapse} postId={id}/> }
     </StyledCard>
     )
 }

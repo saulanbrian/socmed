@@ -2,27 +2,32 @@ import {
   Collapse,
   CardContent,
   List,
+  CardActions,
   useMediaQuery
 } from '@mui/material'
 import Comment from './comment.jsx'
+import CommentInput from './commentInput.jsx'
 
 import { useGetComments } from '../queries/comments.jsx'
-import { useEffect } from 'react'
+import { useEffect,useState } from 'react'
 
 export default function CommentCollapse({isIn,postId}){
   
+  const [enabled,setEnabled] = useState(false)
   const { data, isLoading, error} = useGetComments(postId)
   
   useEffect(() => {
     data && console.log(data)
   },[data])
   
+  function enableQuery(){
+    setEnabled(true)
+  }
   
   return (
-    <Collapse in={isIn} timeout={{
-      enter:800,
-      exit:1300
-    }}>
+    <Collapse 
+      in={isIn} 
+      addEndListener={enableQuery}>
       <CardContent>
         <List>
           {
@@ -33,11 +38,15 @@ export default function CommentCollapse({isIn,postId}){
               authorName={comment.author_name}
               authorProfile={comment.author_profile}
               text={comment.text}
-              likes={comment.like_counts} />
+              likes={comment.like_counts} 
+              image={comment.image}/>
               ))
           }
         </List>
       </CardContent>
+      <CardActions>
+        <CommentInput postId={postId} />
+      </CardActions>
     </Collapse>
     )
 }

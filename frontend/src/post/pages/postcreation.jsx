@@ -23,7 +23,7 @@ export default function PostCreationPage(){
   return (
       <form onSubmit={handleSubmit}>
         <input name='caption' placeholder='caption' />
-        <input type='file' name='image'/>
+        <input type='file' name='image' accept='image/*'/>
         <button type='submit' >create</button>
       </form>
     )
