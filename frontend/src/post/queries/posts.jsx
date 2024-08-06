@@ -1,21 +1,27 @@
 import {
   useQuery,
   useMutation,
-  useQueryClient } from '@tanstack/react-query'
+  useQueryClient,
+  useInfiniteQuery
+} from '@tanstack/react-query'
 
 import api from '../../api.jsx'
 
-export const useGetPosts = () => {
-  return useQuery({
+
+
+export const useInfinitePosts = () => {
+  return useInfiniteQuery({
     queryKey:['posts'],
-    queryFn:async() => {
-      const res = await api.get('posts')
+    queryFn:async({pageParam = 1}) => {
+      const res = await api.get(`posts/?page=${pageParam}`)
       return res.data
     },
-    staleTime:10 * 60 * 1000,
-    cacheTime:10 * 60 * 1000
+    getNextPageParam:(lastPage,pages) => {
+      return lastPage?.next? lastPage.current_page + 1: undefined
+    }
   })
 }
+
 
 export const useCreatePost = () => {
   
@@ -32,9 +38,7 @@ export const useCreatePost = () => {
       return res.data
     },
     onSuccess:(post) => {
-      queryClient.setQueryData(['posts'],(prev) => [
-        ...prev,post
-        ])
+      queryClient.invalidateQueries(['posts'])
     }
   })
 }

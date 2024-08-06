@@ -15,13 +15,14 @@ from comment.serializers import CommentSerializer
 from comment.pagination import CommentPagination
 
 from .models import Post
-
+from .pagination import PostPagination
 
 class PostListCreateView(ListCreateAPIView):
   serializer_class = PostSerializer
   permission_classes = [IsAuthenticated]
   queryset = Post.objects.all()
   parser_classes = [MultiPartParser,FormParser]
+  pagination_class = PostPagination
   
   def perform_create(self,serializer):
     serializer.save(author=self.request.user)

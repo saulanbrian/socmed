@@ -8,7 +8,9 @@ export default function PostCreationPage(){
   const navigate = useNavigate()
   
   useEffect(() => {
-    isSuccess && navigate('/')
+    if(isSuccess){
+      navigate('/')
+    }
   },[isSuccess])
   
   error && console.log(error)
