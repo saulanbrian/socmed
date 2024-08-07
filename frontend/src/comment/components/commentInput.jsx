@@ -124,7 +124,7 @@ export default function CommentInput({postId}){
     <StyledPaper 
       component='form' 
       onSubmit={sendComment}
-      position={onDesktop? 'relative': 'fixed'}>
+      position={onDesktop? 'static': 'fixed'}>
       { imgSrc && (
           <ImagePreview 
             src={imgSrc} 
@@ -149,6 +149,9 @@ export default function CommentInput({postId}){
           fullWidth
           value={text}
           onChange={(e) => setText(e.target.value)}
+          sx={{
+            borderRadius:'50px'
+          }}
           />
         <IconButton 
           color='primary' 

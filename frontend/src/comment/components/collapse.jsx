@@ -14,7 +14,7 @@ import { useEffect,useState } from 'react'
 export default function CommentCollapse({isIn,postId}){
   
   const [enabled,setEnabled] = useState(false)
-  const { data, isLoading, error} = useGetComments(postId)
+  const { data, isLoading, error} = useGetComments(postId,enabled)
   
   useEffect(() => {
     data && console.log(data)
@@ -29,20 +29,28 @@ export default function CommentCollapse({isIn,postId}){
       in={isIn} 
       addEndListener={enableQuery}>
       <CardContent>
-        <List>
-          {
-            data && data.results.map((comment) => (
-            <Comment 
-              key={comment.id}
-              authorId={comment.author_id}
-              authorName={comment.author_name}
-              authorProfile={comment.author_profile}
-              text={comment.text}
-              likes={comment.like_counts} 
-              image={comment.image}/>
-              ))
-          }
-        </List>
+        {
+          isLoading? <p>loading....</p>
+          : error? <p>an error has occured</p>
+          : (
+            <List>
+              {
+                data && data.results.length >= 1
+                  ?  data.results.map((comment) => (
+                    <Comment 
+                      key={comment.id}
+                      authorId={comment.author_id}
+                      authorName={comment.author_name}
+                      authorProfile={comment.author_profile}
+                      text={comment.text}
+                      likes={comment.like_counts} 
+                      image={comment.image}/>
+                  ))
+                  : <p>no comments yet</p>
+              }
+            </List>
+          )
+        }
       </CardContent>
       <CardActions>
         <CommentInput postId={postId} />

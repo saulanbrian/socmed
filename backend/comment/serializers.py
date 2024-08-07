@@ -35,7 +35,10 @@ class CommentSerializer(serializers.ModelSerializer):
     return obj.author.profile.display_name
     
   def get_author_profile(self,obj):
-    return  obj.author.profile.picture.url
+    try:
+      obj.author.profile.picture.url
+    except ValueError:
+      return None
   
   def get_like_counts(self,obj):
     return obj.likers.count()

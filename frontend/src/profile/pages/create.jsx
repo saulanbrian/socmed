@@ -27,7 +27,7 @@ export default function ProfileCreation(){
   },[data])
 
   if (isAuthenticated){
-    return userStore.accountStatus === 'ACTIVE'? <Navigate to='/profile' />: <ProfileCreationForm />
+    return userStore.accountStatus === 'ACTIVE'? <Navigate to='/' />: <ProfileCreationForm />
   }else{
     return <Navigate to='/login' />
   }

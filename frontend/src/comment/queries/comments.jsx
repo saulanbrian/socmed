@@ -1,4 +1,9 @@
-import { useQueryClient, useQuery, useMutation } from '@tanstack/react-query'
+import { 
+  useQueryClient, 
+  useQuery, 
+  useMutation,
+  useInfiniteQuery }
+from '@tanstack/react-query'
 
 import api from '../../api.jsx'
 
