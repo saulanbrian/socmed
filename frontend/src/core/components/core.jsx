@@ -3,23 +3,34 @@ import {
   Toolbar, 
   Button, 
   IconButton,
-  Box
+  Box,
+  useMediaQuery
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from './drawer.jsx'
 import AvatarButton from './avatarbutton.jsx'
+
+import { styled } from '@mui/system'
 
 import { Outlet } from 'react-router-dom'
 import { useState } from 'react'
 
 import { mobile, desktop } from '../styles/display.jsx'
 
-import './navigation.css'
+import './core.css'
 
 
-export default function Nav(){
+const StyledBox = styled(Box)(({theme}) => ({
+  display:'flex',
+  '& > *':{
+    flex:2
+  }
+}))
+
+export default function Core(){
   
   const [drawerOn,setDrawerOn] = useState(false)
+  const onWideScreen = useMediaQuery((theme) => theme.breakpoints.up('md'))
   
   function closeDrawer(){
     setDrawerOn(false)
@@ -46,10 +57,11 @@ export default function Nav(){
         </Toolbar>
       </AppBar>
       <Drawer open={drawerOn} onClose={closeDrawer}/>
-      <Box sx={{backgroundColor:'#c5c5c5cf'}}>
+      <StyledBox sx={{backgroundColor:'#c5c5c5cf'}}>
+        { onWideScreen && <aside>haha</aside>}
         <Outlet />
-      </Box>
+        { onWideScreen && <aside>haha</aside>}
+      </StyledBox>
     </>
     )
 }
-

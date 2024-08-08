@@ -33,7 +33,6 @@ import './post.css'
 const StyledCard = styled(Card)({
   boxShadow:'none',
   marginBottom:3,
-  maxWidth:400
 })
 
 const StyledCardActions = styled(CardActions)({
@@ -116,7 +115,6 @@ export default function Post({caption, id, isLiked, likeCounts, image, authorPro
             className='post-image'
             component='img'
             src={image} 
-            height='300'
             />
         )
       }

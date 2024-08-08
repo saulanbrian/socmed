@@ -9,7 +9,7 @@ import Feed from './post/pages/feed.jsx'
 import ProfilePreview from './profile/pages/preview.jsx'
 import ProfileCreation,{ProfileCreationAction} from './profile/pages/create.jsx'
 import PostCreationPage from './post/pages/postcreation.jsx'
-import Navigation from './core/components/navigation.jsx'
+import Core from './core/components/core.jsx'
 
 import AuthWrapper from './authentication/components/authWrapper.jsx'
 
@@ -18,7 +18,7 @@ import { AuthContextProvider } from './authentication/context/authContext.jsx'
 const router = createBrowserRouter([
   {
     path:'/',
-    element:<AuthWrapper><Navigation /></AuthWrapper>,
+    element:<AuthWrapper><Core /></AuthWrapper>,
     children:[
       {
         path:'',

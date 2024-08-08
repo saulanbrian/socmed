@@ -1,0 +1,12 @@
+#app-bar{
+  box-shadow:none;
+  position: sticky;
+}
+
+#root{
+  padding:0 !important;
+}
+
+body{
+  margin:0 !important;
+}

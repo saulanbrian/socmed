@@ -1,3 +1,19 @@
 .post-image{
   object-fit: contain !important;
 }
+
+@media screen and (max-width:899px){
+  .post-image{
+    max-height:300px !important;
+    object-fit: cover !important;
+  }
+}
+
+@media screen and (min-width:900px){
+  .post-image{
+    max-width:100% !important;
+    overflow: hidden;
+    max-height:400px;
+    object-fit:cover !important;
+  }
+}
