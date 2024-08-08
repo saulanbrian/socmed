@@ -1,57 +1,90 @@
 import React from 'react';
-import { SwipeableDrawer, List, Drawer} from '@mui/material';
-import Comment from './comment.jsx'
-import CommentInput from './commentInput.jsx'
-
+import { SwipeableDrawer, List, Drawer } from '@mui/material';
+import Comment from './comment.jsx';
+import CommentInput from './commentInput.jsx';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { styled } from '@mui/system';
-
-import { useGetComments } from '../queries/comments.jsx'
-import { useEffect } from 'react'
+import { useGetComments } from '../queries/comments.jsx';
+import { useEffect, useState } from 'react';
 
 const StyledDrawer = styled(Drawer)({
   '& .MuiDrawer-paper': {
-    height:400,
+    height: 400,
     maxHeight: 400,
-    maxWidth:400
+    maxWidth: 400,
+    paddingBottom:'20px',
+    overflow: 'auto',
   },
-  '& .MuiBackdrop-root':{
-    maxWidth:400
-  }
-})
+  '& .MuiBackdrop-root': {
+    maxWidth: 400,
+  },
+});
 
-export default function CommentDrawer({ open, onClose ,postId}) {
-  
-  const { 
-    data, 
-    isLoading, 
-    error } = useGetComments(postId)
-  
+export default function CommentDrawer({ open, onClose, postId }) {
+  const [enabled, setEnabled] = useState(false);
+
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetching,
+    status,
+    error,
+    isSuccess,
+    refetch
+  } = useGetComments(postId, enabled);
+
   useEffect(() => {
-    data && console.log(data)
-    console.log('re-rendered')
-  },[data])
-  
+    isSuccess && console.log(data);
+  }, [data]);
+
+  useEffect(() => {
+    setEnabled(true);
+  }, []);
+
+  function getDataLength(data) {
+    let total = 0;
+    for (let page of data.pages) {
+      total += page.results.length;
+    }
+    return total;
+  }
+
   return (
-    <StyledDrawer 
-      open={open} 
-      onClose={onClose}
-      anchor='bottom'>
-      <List>
-        { data && data.results.length >= 1? data.results.map(
-          (comment) => (
-            <Comment 
-              key={comment.id}
-              authorId={comment.author_id}
-              authorName={comment.author_name}
-              authorProfile={comment.author_profile}
-              text={comment.text}
-              likes={comment.like_counts}
-              image={comment.image}/>
-            )
-          ): <p>there are no comments yet</p>
-        }
-      </List>
-      <CommentInput postId={postId}/>
+    <StyledDrawer id='scrollableDiv' open={open} onClose={onClose} anchor='bottom'>
+      <div id='scrollableDivContent' style={{ height: '100%', overflow: 'auto' }}>
+        {data && data?.pages.length >= 1 ? (
+          <InfiniteScroll
+            dataLength={getDataLength(data)}
+            hasMore={hasNextPage}
+            next={fetchNextPage}
+            loader={<p>getting more comments</p>}
+            endMessage={<p>no more comments</p>}
+            pullDownToRefresh
+            refreshFunction={refetch}
+            scrollableTarget='scrollableDivContent'
+          >
+            {data.pages.map(page => {
+              return page.results.map(comment => (
+                <Comment
+                  key={comment.id}
+                  authorId={comment.author_id}
+                  authorName={comment.author_name}
+                  authorProfile={comment.author_profile}
+                  text={comment.text}
+                  likes={comment.like_counts}
+                  image={comment.image}
+                />
+              ));
+            })}
+          </InfiniteScroll>
+        ) : isFetching ? (
+          <p>please wait...</p>
+        ) : (
+          <p>no comments yet</p>
+        )}
+      </div>
+      <CommentInput postId={postId} />
     </StyledDrawer>
   );
 }

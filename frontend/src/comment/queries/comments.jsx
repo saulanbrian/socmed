@@ -7,14 +7,18 @@ from '@tanstack/react-query'
 
 import api from '../../api.jsx'
 
+
 export const useGetComments = (postId,enabled) => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey:['post',postId,'comments'],
-    queryFn:async() => {
-      const res = await api.get(`posts/${postId}/comments`)
+    queryFn:async({pageParam = 1}) => {
+      const res = await api.get(`posts/${postId}/comments?page=${pageParam}`)
       return res.data
     },
-    enabled:enabled
+    getNextPageParam:(lastPage,page) => {
+      return lastPage.next? lastPage.current_page + 1: undefined
+    },
+    enabled: enabled && enabled
   })
 }
 
@@ -32,7 +36,15 @@ export const useAddComment = (postId) => {
       return res.data
     },
     onSuccess:(comment) => {
-      queryClient.invalidateQueries(['post',postId,'comments'])
+      queryClient.setQueryData(['post',postId,'comments'], (data) => {
+        let firstPage = data.pages.shift()
+        firstPage.results = [comment,...firstPage.results]
+        const pages = [firstPage,...data.pages]
+        return {
+          ...data,
+          pages:[...pages]
+        }
+      })
     }
   })
 }

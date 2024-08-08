@@ -84,7 +84,8 @@ export default function CommentInput({postId}){
     mutate,
     isPending, 
     error,
-    isSuccess
+    isSuccess,
+    success
   } = useAddComment(postId)
   
   const imageRef = useRef(null)
@@ -92,11 +93,11 @@ export default function CommentInput({postId}){
   const [imgSrc,setImgSrc] = useState(null)
   
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess || success) {
       setText('')
       setImgSrc(null)
     }
-  },[isSuccess])
+  },[isSuccess,success])
   
   function triggerInput(){
     imageRef.current.click()
