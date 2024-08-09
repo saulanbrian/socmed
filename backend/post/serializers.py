@@ -30,7 +30,10 @@ class PostSerializer(serializers.ModelSerializer):
     return obj.likers.count()
   
   def get_author_profile(slef,obj):
-    return obj.author.profile.picture.url
+    try:
+      return obj.author.profile.picture.url
+    except ValueError:
+      return None
     
   def get_author_name(self,obj):
     return obj.author.profile.display_name
