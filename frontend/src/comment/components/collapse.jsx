@@ -23,7 +23,9 @@ export default function CommentCollapse({isIn,postId}){
     fetchNextPage,
     error,
     success
-  } = useGetComments(postId,enabled)
+  } = useGetComments(postId,enabled,3)
+  
+  error && console.log(error)
   
   useEffect(() => {
     data?.pages && console.log(data)

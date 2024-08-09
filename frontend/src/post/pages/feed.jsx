@@ -18,8 +18,8 @@ const StyledBox = styled(Box)(({theme}) => ({
   height:'100vh',
   maxHeight:'90vh',
   overflow:'auto',
-  flex:'3 !important',
-  paddingBottom:'20px'
+  paddingBottom:'20px',
+  paddingTop:5
 }))
 
 

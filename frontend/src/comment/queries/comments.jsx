@@ -8,11 +8,11 @@ from '@tanstack/react-query'
 import api from '../../api.jsx'
 
 
-export const useGetComments = (postId,enabled) => {
+export const useGetComments = (postId,enabled,pageSize) => {
   return useInfiniteQuery({
     queryKey:['post',postId,'comments'],
     queryFn:async({pageParam = 1}) => {
-      const res = await api.get(`posts/${postId}/comments?page=${pageParam}`)
+      const res = await api.get(`posts/${postId}/comments?page=${pageParam}&page_limit=${pageSize? pageSize: 10}`)
       return res.data
     },
     getNextPageParam:(lastPage,page) => {

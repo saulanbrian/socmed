@@ -13,7 +13,6 @@ const StyledDrawer = styled(Drawer)({
     maxHeight: 400,
     maxWidth: 400,
     paddingBottom:'20px',
-    overflow: 'auto',
   },
   '& .MuiBackdrop-root': {
     maxWidth: 400,
@@ -52,7 +51,7 @@ export default function CommentDrawer({ open, onClose, postId }) {
 
   return (
     <StyledDrawer id='scrollableDiv' open={open} onClose={onClose} anchor='bottom'>
-      <div id='scrollableDivContent' style={{ height: '100%', overflow: 'auto' }}>
+      <div id='scrollableDivContent' style={{ maxHeight: '100%', height:'fit-content',overflow: 'auto' }}>
         {data && data?.pages.length >= 1 ? (
           <InfiniteScroll
             dataLength={getDataLength(data)}

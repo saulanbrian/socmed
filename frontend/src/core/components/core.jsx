@@ -7,8 +7,11 @@ import {
   useMediaQuery
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu';
-import Drawer from './drawer.jsx'
 import AvatarButton from './avatarbutton.jsx'
+
+import LeftSideBar from './leftSideBar.jsx'
+import RightSideBar from './rightSideBar.jsx'
+import CustomSpeedDial from './speedDial.jsx'
 
 import { styled } from '@mui/system'
 
@@ -27,40 +30,35 @@ const StyledBox = styled(Box)(({theme}) => ({
   }
 }))
 
+const MainBox = styled(Box)(({theme}) => ({
+  flex:3,
+  '& > *':{
+    width:'100%'
+  }
+}))
+
 export default function Core(){
   
-  const [drawerOn,setDrawerOn] = useState(false)
   const onWideScreen = useMediaQuery((theme) => theme.breakpoints.up('md'))
   
   function closeDrawer(){
     setDrawerOn(false)
   }
   
-  function openDrawer(){
-    setDrawerOn(true)
-  }
-  
   return (
     <>
       <AppBar id='app-bar'>
         <Toolbar>
-          <IconButton color='inherit' 
-                      onClick={openDrawer}
-                      edge='start'
-                      sx={{...mobile,marginRight:'auto'}}>
-            <MenuIcon />
-          </IconButton>
-          <Button color='inherit' sx={{...desktop,marginLeft:'auto'}}>
-            profile
-          </Button>
-          <AvatarButton/>
+          <AvatarButton />
         </Toolbar>
       </AppBar>
-      <Drawer open={drawerOn} onClose={closeDrawer}/>
       <StyledBox sx={{backgroundColor:'#c5c5c5cf'}}>
-        { onWideScreen && <aside>haha</aside>}
-        <Outlet />
-        { onWideScreen && <aside>haha</aside>}
+      { onWideScreen && <LeftSideBar />}
+        <MainBox>
+          <Outlet />
+        </MainBox>
+      { onWideScreen && <RightSideBar />}
+      {!onWideScreen && <CustomSpeedDial />}
       </StyledBox>
     </>
     )
