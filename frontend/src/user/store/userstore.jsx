@@ -5,10 +5,10 @@ const actions = (set) => ({
   setDisplayName:(name) => set({displayName:name}),
   setProfilePicture:(url) => set({profilePicture:url}),
   setAccountStatus:(status) => set({accountStatus:status}),
-  setDescription:(description) => set({description:description}),
+  setProfileId:(id) => set({profileId:id}),
   reset:() => set({
     displayName: null,
-    description:null,
+    profileId:null,
     profilePicture:null,
     accountStatus:null
   })
@@ -18,6 +18,7 @@ export const useUserStore = create(
   persist(
     (set,get) => ({
       displayName:null,
+      profileId:null,
       profilePicture:null,
       description:null,
       accountStatus:null,

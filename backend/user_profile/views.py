@@ -3,7 +3,7 @@ from django.shortcuts import render
 from rest_framework.generics import CreateAPIView, RetrieveAPIView
 from rest_framework.views import APIView
 
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -22,7 +22,6 @@ class ProfileView(APIView):
     serializer = ProfileSerializer(profile)
     return Response(serializer.data,status=status.HTTP_200_OK)
 
-
 class ProfileCreationView(CreateAPIView):
   serializer_class = ProfileSerializer
   permission_classes = [IsAuthenticated]
@@ -36,4 +35,6 @@ class ProfileCreationView(CreateAPIView):
 
 class ProfileRetrieveView(RetrieveAPIView):
   serializer_class = ProfileSerializer
+  queryset = Profile.objects.all()
+  permission_classes = [AllowAny]
   

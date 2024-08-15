@@ -45,5 +45,9 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     token['account_status'] = user.account_status
     token['profile_picture'] = get_user_profile(user)
     token['display_name'] = get_user_display_name(user)
+    try:
+      token['profile_id'] = user.profile.id
+    except:
+      token['profile_id'] = None
     
     return token

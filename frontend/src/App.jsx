@@ -28,11 +28,11 @@ const router = createBrowserRouter([
         path:'post/create',
         element:<AuthWrapper><PostCreationPage /></AuthWrapper>
       },
-      {
-        path:'profile',
-        element:<AuthWrapper><h1>you are here because you already have a profile</h1></AuthWrapper>,
-      },
       ]
+  },
+  {
+    path:'profile',
+    element:<ProfilePreview />,
   },
   {
     path:'profile/create/',

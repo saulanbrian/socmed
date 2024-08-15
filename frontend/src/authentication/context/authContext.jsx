@@ -20,7 +20,7 @@ export const AuthContextProvider = ({children}) => {
     const decoded = jwtDecode(access)
     localStorage.setItem('ACCESS_TOKEN',access)
     localStorage.setItem('REFRESH_TOKEN',refresh)
-    userStore.setDisplayName(decoded.display_name)
+    userStore.setProfileId(decoded.profile_id)
     userStore.setProfilePicture(decoded.profile_picture)
     userStore.setAccountStatus(decoded.account_status)
     setIsAuthenticated(true)
