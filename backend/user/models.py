@@ -3,15 +3,13 @@ import uuid
 
 from django.contrib.auth.models import AbstractUser
 
-from user_profile.models import Profile
+
+
+def construct_path(instance,filename):
+  return '{0}/profile_picture/{1}'.format(instance.username,filename)
 
 class CustomUser(AbstractUser):
-  
-  STATUS_CHOICHES = [
-    ('HOLD','HOLD'),
-    ('ACTIVE','ACTIVE')
-    ]
-  
-  profile = models.OneToOneField(Profile,on_delete=models.SET_NULL,null=True,related_name='user')
-  account_status = models.CharField(max_length=20,choices=STATUS_CHOICHES,default='HOLD')
-  
+  followers = models.ManyToManyField('self',related_name='following',symmetrical=False)
+  display_name = models.CharField(max_length=50)
+  pfp = models.ImageField(upload_to=construct_path,null=True)
+  bio = models.CharField(max_length=200,null=True)

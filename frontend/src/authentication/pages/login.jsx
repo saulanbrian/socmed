@@ -28,11 +28,11 @@ export async function LoginAction({request}){
   
   const username = formData.get('username')
   const password = formData.get('password')
-  
+ 
   try{ 
     const res = await api.post('auth/token/',{
-      username:username,
-      password:password
+      username,
+      password,
     })
     return res.data
   }catch(e){

@@ -9,10 +9,5 @@ from .models import CustomUser
 def hash_password(sender,instance,created,**kwargs):
   if created:
     instance.password = make_password(instance.password)
-
-@receiver(pre_save,sender=CustomUser)
-def check_setup_status(sender,instance,**kwargs):
-  if bool(instance.profile):
-    instance.account_status = 'ACTIVE'
-  else:
-    instance.account_status = 'HOLD'
+    instance.save()
+    

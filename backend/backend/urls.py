@@ -11,7 +11,6 @@ urlpatterns = [
     path('auth/token/',TokenObtainPairView.as_view()),
     path('auth/token/refresh/',TokenRefreshView.as_view()),
     path('user/',include('user.urls')),
-    path('profile/',include('user_profile.urls')),
     path('posts/',include('post.urls')),
     path('comment/',include('comment.urls')),
     path('shared_post/',include('sharedpost.urls'))

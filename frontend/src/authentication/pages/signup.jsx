@@ -26,6 +26,7 @@ export async function SignupAction({request}){
   
   const username = formData.get('username')
   const password = formData.get('password')
+  const display_name = formData.get('display_name')
   const confirmation = formData.get('confirmation')
   
   if(password != confirmation){
@@ -34,8 +35,9 @@ export async function SignupAction({request}){
   
   try{
     const res = await api.post('user/signup/',{
-      username:username,
-      password:password
+      username,
+      password,
+      display_name,
       })
       return res.data
   }catch(e){

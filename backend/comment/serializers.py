@@ -32,11 +32,11 @@ class CommentSerializer(serializers.ModelSerializer):
     return obj.author.id
     
   def get_author_name(self,obj):
-    return obj.author.profile.display_name
+    return obj.author.display_name
     
   def get_author_profile(self,obj):
     try:
-      obj.author.profile.picture.url
+      return obj.author.pfp.url
     except ValueError:
       return None
   

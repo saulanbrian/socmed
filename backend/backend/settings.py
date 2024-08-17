@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'post.apps.PostConfig',
-    'user_profile.apps.UserProfileConfig',
     'comment.apps.CommentConfig',
     'sharedpost.apps.SharedpostConfig',
     'notification.apps.NotificationConfig'

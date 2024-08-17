@@ -7,9 +7,11 @@ export default function AuthForm({userAction}){
     <Form action='' method='post'>
       <input name="username" placeholder="username" />
       <input name="password" placeholder="password" type="password"/>
-      {
-       userAction === 'signup' && <input name="confirmation" placeholder="confirmation" type="password" />
-      }
+      { userAction === 'signup' &&
+        <>
+          <input name="confirmation" placeholder="confirmation" type="password" />
+          <input name="display_name" placeholder="display name" />
+        </>}
       <button type='submit'>{userAction}</button>
       {
         userAction === 'login'? 

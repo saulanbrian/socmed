@@ -2,26 +2,22 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware'
 
 const actions = (set) => ({
+  setId:(id) => set({id:id}),
   setDisplayName:(name) => set({displayName:name}),
   setProfilePicture:(url) => set({profilePicture:url}),
-  setAccountStatus:(status) => set({accountStatus:status}),
-  setProfileId:(id) => set({profileId:id}),
   reset:() => set({
+    id:null,
     displayName: null,
-    profileId:null,
     profilePicture:null,
-    accountStatus:null
   })
 })
 
 export const useUserStore = create(
   persist(
     (set,get) => ({
+      id:null,
       displayName:null,
-      profileId:null,
       profilePicture:null,
-      description:null,
-      accountStatus:null,
       ...actions(set)
     }),
     {

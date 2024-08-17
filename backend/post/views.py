@@ -17,6 +17,7 @@ from comment.pagination import CommentPagination
 from .models import Post
 from .pagination import PostPagination
 
+
 class PostListCreateView(ListCreateAPIView):
   serializer_class = PostSerializer
   permission_classes = [IsAuthenticated]

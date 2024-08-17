@@ -54,11 +54,12 @@ const titleProps = {
 }
 
 
-export default function Post({caption, id, isLiked, likeCounts, image, authorProfile,authorName,authorId}){
+export default function Post({caption, id, isLiked, likeCounts, image, authorProfile,authorName,authorId,authorProfileId}){
   
   const baseUrl = import.meta.env.VITE_API_URL
   
   const collapseComment = useMediaQuery((theme) => theme.breakpoints.up('sm'))
+  const navigate = useNavigate()
   
   const [liked,setLiked] = useState(isLiked)
   const [likes,setLikes] = useState(likeCounts)
@@ -103,6 +104,7 @@ export default function Post({caption, id, isLiked, likeCounts, image, authorPro
         title={authorName}
         subheader='dxample'
         titleTypographyProps={titleProps}
+        onClick={ () => navigate(`/profile/${authorProfileId}`) }
         />
       <CardContent sx={{padding:'10px',margin:0}}>
         <Typography align='left' variant='body2'>

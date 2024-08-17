@@ -72,6 +72,7 @@ function Feed(){
                     likeCounts={post.like_counts}
                     image={post.image}
                     authorProfile={post.author_profile}
+                    authorProfileId={post.author_profile_id}
                     authorName={post.author_name}
                     authorId={post.author_id}/>
               ))

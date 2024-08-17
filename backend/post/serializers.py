@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import Post
-from user.serializers import UserSerializer
+
 
 class PostSerializer(serializers.ModelSerializer):
   
@@ -13,9 +13,20 @@ class PostSerializer(serializers.ModelSerializer):
   
   class Meta:
     model = Post
-    fields = ('id','author_name','author_id','author_profile','caption','image','like_counts','is_liked')
+    fields = (
+      'id',
+      'author_name',
+      'author_id',
+      'author_profile',
+      'caption',
+      'image',
+      'like_counts',
+      'is_liked'
+    )
     extra_kwargs = {
-      'author':{'read_only':True}
+      'author':{'read_only':True},
+      'caption':{'required':False},
+      'image':{'required':False},
     }
   
   
@@ -31,12 +42,13 @@ class PostSerializer(serializers.ModelSerializer):
   
   def get_author_profile(slef,obj):
     try:
-      return obj.author.profile.picture.url
+      return obj.author.pfp.url
     except ValueError:
       return None
     
   def get_author_name(self,obj):
-    return obj.author.profile.display_name
+    return obj.author.display_name
   
   def get_author_id(self,obj):
     return obj.author.id
+    
