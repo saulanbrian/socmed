@@ -5,6 +5,10 @@ import {
   Avatar,
   useMediaQuery,
   Button,
+  Typography,
+  ListItemButton,
+  ListItem,
+  List
 } from '@mui/material'
 
 import { styled } from '@mui/system'
@@ -12,6 +16,9 @@ import { styled } from '@mui/system'
 import Post from '../../post/components/post.jsx'
 
 import {useGetUserPosts} from '../queries/user.jsx'
+import { useUserStore } from '../store/userstore.jsx'
+import { useAuthContext } from '../../authentication/context/authContext.jsx'
+import { useNavigate } from 'react-router-dom'
 
 const MainBox = styled(Box)(({theme}) => ({
   display:'flex',
@@ -19,11 +26,19 @@ const MainBox = styled(Box)(({theme}) => ({
   maxHeight:'100vh',
   overflow:'auto',
   background:'#c5c5c5cf',
+  [theme.breakpoints.up('md')]:{
+    flexWrap:'nowrap'
+  }
 }))
 
 const StyledPaper = styled(Paper)(({theme}) => ({
   flexGrow:1,
   gap:5,
+  padding:'10px 5px',
+  display:'flex',
+  margin:3,
+  flexWrap:'wrap',
+  height:'fit-content',
   position:'static !important',
   [theme.breakpoints.down('sm')]:{
     width:'100%'
@@ -31,9 +46,10 @@ const StyledPaper = styled(Paper)(({theme}) => ({
 }))
 
 const StyledPostsBox = styled(Box)(({theme}) => ({
-  width:'55vw',
+  width:'53vw',
   maxHeight:'100%',
   overflow:'auto',
+  padding:3,
   [theme.breakpoints.down('sm')]:{
     width:'100%',
   },
@@ -42,11 +58,68 @@ const StyledPostsBox = styled(Box)(({theme}) => ({
   }
 }))
 
+const StyledAvatar = styled(Avatar)(({theme}) => ({
+  height:150,
+  width:150,
+}))
+
+const StyledListItemButton = styled(ListItemButton)(({theme,color}) => ({
+  borderRadius:'10px',
+  display:'flex',
+  justifyContent:'center',
+  border:`1px solid ${color === 'primary'? theme.palette.primary.main: theme.palette.secondary.main}`,
+}))
+
 
 function UserInfo({userInfo}){
+  
+  const { id } = userInfo
+  const { id:userId } = useUserStore()
+  const { isAuthenticated } = useAuthContext()
+  const navigate = useNavigate()
+  
+  function handleClick(){
+    if(isAuthenticated){
+      id === userId? navigate('/logout'): alert('do something')
+    }else navigate('/login')
+  }
+  
   return (
     <StyledPaper>
-      { userInfo.display_name }
+      <StyledAvatar src={userInfo.pfp}/>
+      <Box sx={{flexGrow:1}}>
+        <List>
+          <ListItem>
+            <Typography variant='subtitle1' sx={{fontSize:'1.5rem'}}>
+              { userInfo.display_name }
+            </Typography>
+          </ListItem>
+          <ListItem sx={{display:'flex',gap:3}}>
+            <Typography>
+              { userInfo.following_count || 0} following
+            </Typography>
+            <Typography >
+              { userInfo.follower_count || 0} followers
+            </Typography>
+          </ListItem>
+          <ListItem>
+            <StyledListItemButton 
+              variant='contained' 
+              color={id === userId? 'secondary': 'primary'} 
+              dense
+              onClick={handleClick}>
+              <Typography variant='button' color={id === userId? 'secondary': 'primary'}>
+                { id === userId? 'logout': 'follow'}
+              </Typography>
+            </StyledListItemButton>
+          </ListItem>
+        </List>
+      </Box>
+      <Box>
+        <Typography paragraph sx={{marginLeft:'3px',padding:0}}>
+          { userInfo.bio || 'jsksksskskskks' }
+        </Typography>
+      </Box>
     </StyledPaper>
   )
 }

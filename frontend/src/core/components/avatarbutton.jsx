@@ -38,7 +38,7 @@ export default function AvatarButton(){
           anchorEl={anchorEl}
           onClose={e => setAnchorEl(null)}>
       <MenuList>
-        <MenuItem onClick={e => handleClose(e,'/profile')}>
+        <MenuItem onClick={e => handleClose(e,'/me')}>
           profile
         </MenuItem>
         <MenuItem onClick={handleClose} divider>account</MenuItem>
