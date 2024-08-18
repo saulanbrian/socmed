@@ -6,9 +6,7 @@ import Login,{LoginAction} from './authentication/pages/login.jsx'
 import Signup,{SignupAction} from './authentication/pages/signup.jsx'
 import Logout from './authentication/pages/logout.jsx'
 import Feed from './post/pages/feed.jsx'
-import ProfilePreview from './profile/pages/preview.jsx'
 import Profile from './user/pages/profile'
-import ProfileCreation,{ProfileCreationAction} from './profile/pages/create.jsx'
 import PostCreationPage from './post/pages/postcreation.jsx'
 import Core from './core/components/core.jsx'
 
@@ -34,11 +32,6 @@ const router = createBrowserRouter([
   {
     path:'me',
     element:<AuthWrapper><Profile /></AuthWrapper>,
-  },
-  {
-    path:'profile/create/',
-    element:<ProfileCreation />,
-    action:ProfileCreationAction
   },
   {
     path:':id',

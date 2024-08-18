@@ -13,15 +13,18 @@ import Post from '../../post/components/post.jsx'
 
 import {useGetUserPosts} from '../queries/user.jsx'
 
-
 const MainBox = styled(Box)(({theme}) => ({
   display:'flex',
-  flexWrap:'wrap'
+  flexWrap:'wrap',
+  maxHeight:'100vh',
+  overflow:'auto',
+  background:'#c5c5c5cf',
 }))
 
 const StyledPaper = styled(Paper)(({theme}) => ({
   flexGrow:1,
   gap:5,
+  position:'static !important',
   [theme.breakpoints.down('sm')]:{
     width:'100%'
   }
@@ -29,10 +32,13 @@ const StyledPaper = styled(Paper)(({theme}) => ({
 
 const StyledPostsBox = styled(Box)(({theme}) => ({
   width:'55vw',
+  maxHeight:'100%',
+  overflow:'auto',
   [theme.breakpoints.down('sm')]:{
     width:'100%',
-    maxHeight:'100vh',
-    overflow:'auto'
+  },
+  [theme.breakpoints.up('md')]:{
+    maxHeight:'100vh'
   }
 }))
 
@@ -46,10 +52,17 @@ function UserInfo({userInfo}){
 }
 
 
+function Loader(){
+  return (
+      <Box>
+        <h1>loading...</h1>
+      </Box>
+    )
+}
+
 export default function ProfileComponent({userInfo}){
   
-  const onSmallScreen = useMediaQuery(theme => theme.breakpoints
-  .down('sm'))
+  const onSmallScreen = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const { id } = userInfo
   const {
     isFetching,
@@ -85,7 +98,7 @@ export default function ProfileComponent({userInfo}){
               dataLength={getDataLength(data)}
               next={fetchNextPage}
               hasMore={hasNextPage}
-              loader={<p>loading..</p>}
+              loader={<Loader />}
               endMessage={<p>no more posts..</p>}
               scrollableTarget={onSmallScreen? 'main-box': 'posts-box'}>
               { data?.pages.map(page => {

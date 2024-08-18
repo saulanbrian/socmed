@@ -54,7 +54,7 @@ const titleProps = {
 }
 
 
-export default function Post({caption, id, isLiked, likeCounts, image, authorProfile,authorName,authorId,authorProfileId}){
+export default function Post({caption, id, isLiked, likeCounts, image, authorProfile,authorName,authorId,}){
   
   const baseUrl = import.meta.env.VITE_API_URL
   
@@ -104,7 +104,7 @@ export default function Post({caption, id, isLiked, likeCounts, image, authorPro
         title={authorName}
         subheader='dxample'
         titleTypographyProps={titleProps}
-        onClick={ () => navigate(`/profile/${authorProfileId}`) }
+        onClick={ () => navigate(`/${authorId}`) }
         />
       <CardContent sx={{padding:'10px',margin:0}}>
         <Typography align='left' variant='body2'>
