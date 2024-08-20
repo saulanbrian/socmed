@@ -31,7 +31,7 @@ export default function AvatarButton(){
   
   return (
     <>
-    <Button onClick={openMenu} sx={{marginLeft:'auto'}}>
+    <Button onClick={openMenu} sx={{marginLeft:'auto',cursor:'pointer'}}>
       <Avatar src={profileUrl} />
     </Button>
     <Menu open={menuOpen} 

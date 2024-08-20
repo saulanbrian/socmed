@@ -21,13 +21,14 @@ import CommentButton from '../../comment/components/commentButton.jsx'
 import CommentCollapse from '../../comment/components/collapse.jsx'
 
 import { useEffect,useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useActionData, useNavigate } from 'react-router-dom'
 import { useLikePost, useUnlikePost } from '../queries/likedposts.jsx'
 import { useMediaQuery } from '@mui/material'
 
 import { styled } from '@mui/system'
 
 import './post.css'
+import { useAuthContext } from '../../authentication/context/authContext.jsx';
 
 
 const StyledCard = styled(Card)({
@@ -57,6 +58,8 @@ const titleProps = {
 export default function Post({caption, id, isLiked, likeCounts, image, authorProfile,authorName,authorId,}){
   
   const baseUrl = import.meta.env.VITE_API_URL
+
+  const { isAuthenticated } = useAuthContext()
   
   const collapseComment = useMediaQuery((theme) => theme.breakpoints.up('sm'))
   const navigate = useNavigate()
@@ -65,10 +68,6 @@ export default function Post({caption, id, isLiked, likeCounts, image, authorPro
   const [likes,setLikes] = useState(likeCounts)
   
   const [collapse,setCollapse] = useState(false)
-  
-  function openCollapse(){
-    setCollapse(true)
-  }
   
   const {
     error:likeFailed,
@@ -84,11 +83,18 @@ export default function Post({caption, id, isLiked, likeCounts, image, authorPro
     mutate:unlike
   } = useUnlikePost()
   
+
+  function openCollapse(){
+    setCollapse(true)
+  }
+
   async function handleClick(e){
     e.preventDefault();
-    liked? await unlike(id): await like(id)
-    liked? setLikes(prev => prev - 1): setLikes(prev => prev + 1)
-    setLiked(!liked)
+    if (isAuthenticated){
+      liked? await unlike(id): await like(id)
+      liked? setLikes(prev => prev - 1): setLikes(prev => prev + 1)
+      setLiked(!liked)
+    }else navigate('/login')
   }
   
   function handleCollapse(){
@@ -100,7 +106,7 @@ export default function Post({caption, id, isLiked, likeCounts, image, authorPro
     <StyledCard component={Box}>
       <CardHeader 
         sx={{padding:1}}
-        avatar={<Avatar src={baseUrl + authorProfile}/>}
+        avatar={<Avatar src={baseUrl + authorProfile} sx={{cursor:'pointer'}}/>}
         title={authorName}
         subheader='dxample'
         titleTypographyProps={titleProps}

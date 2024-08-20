@@ -21,6 +21,7 @@ import { useState } from 'react'
 import { mobile, desktop } from '../styles/display.jsx'
 
 import './core.css'
+import { useAuthContext } from '../../authentication/context/authContext.jsx';
 
 
 const StyledBox = styled(Box)(({theme}) => ({
@@ -40,6 +41,7 @@ const MainBox = styled(Box)(({theme}) => ({
 export default function Core(){
   
   const onWideScreen = useMediaQuery((theme) => theme.breakpoints.up('md'))
+  const { isAuthenticated } = useAuthContext()
   
   function closeDrawer(){
     setDrawerOn(false)
@@ -49,7 +51,7 @@ export default function Core(){
     <>
       <AppBar id='app-bar'>
         <Toolbar>
-          <AvatarButton />
+          { isAuthenticated && <AvatarButton /> }
         </Toolbar>
       </AppBar>
       <StyledBox sx={{backgroundColor:'#c5c5c5cf'}}>

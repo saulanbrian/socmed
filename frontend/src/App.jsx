@@ -17,7 +17,7 @@ import { AuthContextProvider } from './authentication/context/authContext.jsx'
 const router = createBrowserRouter([
   {
     path:'/',
-    element:<AuthWrapper><Core /></AuthWrapper>,
+    element:<Core />,
     children:[
       {
         path:'',

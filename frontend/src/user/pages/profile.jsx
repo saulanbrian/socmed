@@ -1,31 +1,44 @@
+import { 
+  Box,
+  useMediaQuery
+} from '@mui/material'
+import { styled } from '@mui/system'
 import { useParams } from 'react-router-dom'
 import { useGetUserInfo } from '../queries/user.jsx'
 import { useUserStore } from '../store/userstore.jsx'
 import { useEffect } from 'react'
 
-import ProfileComponent from '../components/profile.jsx'
+import UserPostsInfiniteScroll from '../../post/components/userPostsInfiniteScroll.jsx'
+import UserInfo from '../components/userInfo.jsx'
+
+
+const StyledBox = styled(Box)(({theme}) => ({
+  display:'flex',
+  flexWrap:'wrap',
+}))
+
+const PostBox = styled(Box)(({theme}) => ({
+  maxHeight:'100vh',
+  overflow:'auto',
+  background:'grey',
+  maxWidth:500
+}))
+
 
 export default function Profile(){
   
+  const onSmallScreen = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const {id} = useParams()
   const {id:userId} = useUserStore()
   
-  const {
-    isLoading,
-    error,
-    data:userInfo,
-    status
-  } = useGetUserInfo(id? id: userId)
-  
-  useEffect(() => {
-    userInfo && console.log(userInfo)
-    error && console.log(error)
-    status && console.log(status)
-  },[error,userInfo,status])
-  
-  return isLoading? (
-      <p>loading...</p>
-    ): error? (
-      <p>an error has occured</p>
-    ): <ProfileComponent userInfo={userInfo} />
+  return (
+    <StyledBox id='main-box'>
+      <UserInfo userId={id? id: userId} sx={{maxWidth:'40vw'}} />
+      <PostBox id='actual-parent'>
+        <UserPostsInfiniteScroll 
+          userId={id? id: userId} 
+          scrollableTarget={onSmallScreen? 'main-box':'actual-parent'}/>
+      </PostBox>
+    </StyledBox>
+  )
 }

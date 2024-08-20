@@ -20,10 +20,11 @@ export const useGetUserInfo = (id) => {
 export const useGetUserPosts = (id) => {
   return useInfiniteQuery({
     queryKey:['user',id,'posts'],
-    queryFn:async({pageParam = 1}) => {
+    queryFn:async({pageParam}) => {
       const res = await api.get(`user/${id}/posts?page=${pageParam}`)
       return res.data
     },
+    initialPageParam:1,
     getNextPageParam:(lastPage,pages) => {
       return lastPage.next? lastPage.current_page + 1: undefined
     }

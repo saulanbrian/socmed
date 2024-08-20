@@ -2,6 +2,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser,FormParser
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.exceptions import PermissionDenied
 
 from django.shortcuts import get_object_or_404
 
@@ -20,12 +21,13 @@ from .pagination import PostPagination
 
 class PostListCreateView(ListCreateAPIView):
   serializer_class = PostSerializer
-  permission_classes = [IsAuthenticated]
   queryset = Post.objects.all()
   parser_classes = [MultiPartParser,FormParser]
   pagination_class = PostPagination
   
   def perform_create(self,serializer):
+    if not self.request.user.is_authenticated:
+      raise PermissionDenied('login first before creating a post')
     serializer.save(author=self.request.user)
     
     
