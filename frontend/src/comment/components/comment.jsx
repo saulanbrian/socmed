@@ -12,13 +12,14 @@ import { styled } from '@mui/system'
 
 const StyledListItemText = styled(ListItemText)({
   '& .MuiListItemText-primary':{
-    fontSize:'1rem',
-    fontWeight:500,
-    padding:0
+    fontSize:'0.8rem',
+    fontWeight:520,
+   
   },
   '& .MuiListItemText-secondary':{
-    fontSize:'1rem',
-    color:'#000000'
+    fontSize:'0.7rem',
+    color:'#000000',
+    fontWeight:360
   },
 })
 
@@ -27,7 +28,7 @@ const StyledImage = styled('img')({
   width:'fit-content',
   maxWidth:'250px',
   objectFit:'contain',
-  borderRadius:'5px',
+  borderRadius:'4px',
   border:'1px solid #353535cf',
 })
 
@@ -35,32 +36,33 @@ const StyledImage = styled('img')({
 const StyledListItem = styled(ListItem)(({theme}) => ({
   display:'flex',
   alignItems:'start',
-  paddingTop:0,
+  
+  borderLeft:`1px solid ${theme.palette.primary.dark}`
 }))
 
-export default function Comment({authorProfile,authorId,authorName,text,likes,image}){
+export default function Comment({authorProfile,authorId,authorName,text,likes,image,sx}){
   const authorProfileUrl = import.meta.env.VITE_API_URL + authorProfile
   
   return (
-    <>
-      <StyledListItem>
-        <ListItemAvatar>
-          <Avatar 
-            src={authorProfileUrl}
-            sx={{
-              marginTop: text && '10px'
-            }}/>
-        </ListItemAvatar>
-        <Box>
-          <StyledListItemText 
-            primary={authorName}
-            secondary={text}
-            sx={{
-              minHeight:'30px',
-            }}/>
-          { image && <StyledImage src={image} /> }
-        </Box>
-      </StyledListItem>
-    </>
-    )
+    <StyledListItem sx={sx}>
+      <ListItemAvatar>
+        <Avatar 
+          src={authorProfileUrl}
+          sx={{
+            marginTop: text && '8px'
+          }}
+          sizes='small'/>
+      </ListItemAvatar>
+      <Box>
+        <StyledListItemText 
+          primary={authorName}
+          secondary={text}
+          sx={{
+            minHeight:'28px',
+          }}
+          />
+        { image && <StyledImage src={image} /> }
+      </Box>
+    </StyledListItem>
+  )
 }

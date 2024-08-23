@@ -10,7 +10,6 @@ import { useState } from 'react'
 
 
 const StyledButton = styled(Button)({
-  fontWeight:'Light',
   textTransform:'none'
 })
 
@@ -34,7 +33,8 @@ export default function CommentButton({postId,clickFn}){
       <StyledButton 
         startIcon={<ChatBubbleOutlineSharpIcon/>}
         onClick={hanldeClick}
-        color='inherit'>
+        color='inherit'
+        disableElevation>
         comment
       </StyledButton>
       { 

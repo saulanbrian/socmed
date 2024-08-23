@@ -19,23 +19,23 @@ import { useAddComment } from '../queries/comments.jsx'
 import { useRef, useState, useEffect } from 'react'
 
 import api from '../../api.jsx'
+import { useAuthContext } from '../../authentication/context/authContext.jsx';
+import { useNavigate } from 'react-router-dom';
 
 
 const StyledPaper = styled(Paper)(({theme,...props}) => ({
   boxShadow:'none',
-  position:props.position,
   bottom:'0',
   borderRadius:0,
   width:'100%',
-  borderTop:'1px solid #3d3d3dcf',
 }))
 
 const ActionArea = styled(Box)({
   display:'flex',
   flexWrap:'nowrap',
   width:'100%',
-  padding:5,
-  gap:1,
+  justifyContent:'flex-end',
+  gap:4
 })
 
 const Input = styled('input')({
@@ -61,7 +61,7 @@ const RemoveButton = styled(IconButton)(({theme,...props}) => ({
 function ImagePreview({src,showImage,size,removeFn}){
   return (
     <Collapse in={showImage}>
-      <Box sx={{width:'100%',padding:1}}>
+      <Box sx={{width:'100%',padding:2}}>
         <RemoveButton 
           imagesize={size} 
           onClick={ () => removeFn() }
@@ -79,7 +79,8 @@ function ImagePreview({src,showImage,size,removeFn}){
 export default function CommentInput({postId}){
   
   const onDesktop = useMediaQuery((theme) => theme.breakpoints.up('sm'))
-  
+  const { isAuthenticated } = useAuthContext()
+  const navigate = useNavigate()
   const { 
     mutate,
     isPending, 
@@ -117,6 +118,7 @@ export default function CommentInput({postId}){
   
   function sendComment(e){
     e.preventDefault()
+    !isAuthenticated && navigate('/login')
     const data = new FormData(e.target)
     mutate(data)
   }
@@ -139,21 +141,18 @@ export default function CommentInput({postId}){
             ref={imageRef}
             onChange={handleChange}
             name='image'/>
-        <IconButton onClick={triggerInput}>
-          <FilterSharpIcon />
-        </IconButton>
         <TextField 
           placeholder='comment'
           variant='outlined'
           size='small'
           name='text'
-          fullWidth
+          sx={{outline:'none',width:'60%' }}
           value={text}
           onChange={(e) => setText(e.target.value)}
-          sx={{
-            borderRadius:'50px'
-          }}
           />
+        <IconButton onClick={triggerInput}>
+          <FilterSharpIcon />
+        </IconButton>
         <IconButton 
           color='primary' 
           type='submit'

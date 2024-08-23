@@ -11,7 +11,7 @@ import { styled } from '@mui/system'
 import { useNavigate } from 'react-router-dom'
 
 const StyledBox = styled(Box)(({theme}) => ({
-  padding:5
+  padding:4
 }))
 
 const StyledPaper = styled(Paper)(({theme}) => ({
@@ -38,9 +38,9 @@ export default function LeftSideBar(){
           <List>
             {
               routes.map(({repr,route}) => (
-                <ListItem key={repr}>
+                <ListItem key={repr} disablePadding disableGutters>
                   <ListItemButton 
-                    onClick={() => handleClick(route)}>
+                    onClick={() => handleClick(route)} disableRipple>
                     { repr } 
                   </ListItemButton>
                 </ListItem>

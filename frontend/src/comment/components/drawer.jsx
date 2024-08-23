@@ -10,12 +10,12 @@ import { useEffect, useState } from 'react';
 const StyledDrawer = styled(Drawer)({
   '& .MuiDrawer-paper': {
     height: 400,
-    maxHeight: 400,
-    maxWidth: 400,
+    maxHeight: '100%',
+    maxWidth: '100%',
     paddingBottom:'20px',
   },
   '& .MuiBackdrop-root': {
-    maxWidth: 400,
+    maxWidth:'100%',
   },
 });
 
@@ -51,7 +51,7 @@ export default function CommentDrawer({ open, onClose, postId }) {
 
   return (
     <StyledDrawer id='scrollableDiv' open={open} onClose={onClose} anchor='bottom'>
-      <div id='scrollableDivContent' style={{ maxHeight: '100%', height:'fit-content',overflow: 'auto' }}>
+      <div id='scrollableDivContent' style={{ maxHeight: '100%', height:'fit-content',overflow: 'auto',padding:4 }}>
         {data && data?.pages.length >= 1 ? (
           <InfiniteScroll
             dataLength={getDataLength(data)}

@@ -25,7 +25,10 @@ import { useAuthContext } from '../../authentication/context/authContext.jsx';
 
 
 const StyledBox = styled(Box)(({theme}) => ({
+  backgroundColor:theme.palette.primary.dark,
   display:'flex',
+  gap:4,
+  padding:4,
   '& > *':{
     flex:2
   }
@@ -33,34 +36,38 @@ const StyledBox = styled(Box)(({theme}) => ({
 
 const MainBox = styled(Box)(({theme}) => ({
   flex:3,
+  paddingTop:4,
   '& > *':{
-    width:'100%'
+    width:'100%',
+    maxHeight:'100%'
   }
 }))
 
 export default function Core(){
   
-  const onWideScreen = useMediaQuery((theme) => theme.breakpoints.up('md'))
+  const onMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'))
+  const onTablet = useMediaQuery((theme) => { return theme.breakpoints.down('md') && theme.breakpoints.up('sm')} )
+  const onDesktop = useMediaQuery((theme) => { return theme.breakpoints.up('lg') })
   const { isAuthenticated } = useAuthContext()
-  
+
   function closeDrawer(){
     setDrawerOn(false)
   }
   
   return (
     <>
-      <AppBar id='app-bar'>
+      <AppBar id='app-bar' color='primary'>
         <Toolbar>
           { isAuthenticated && <AvatarButton /> }
         </Toolbar>
       </AppBar>
-      <StyledBox sx={{backgroundColor:'#c5c5c5cf'}}>
-      { onWideScreen && <LeftSideBar />}
+      <StyledBox>
+      { onDesktop && <LeftSideBar />}
         <MainBox>
           <Outlet />
         </MainBox>
-      { onWideScreen && <RightSideBar />}
-      {!onWideScreen && <CustomSpeedDial />}
+      { onTablet && <RightSideBar />}
+      { onMobile && <CustomSpeedDial />}
       </StyledBox>
     </>
     )

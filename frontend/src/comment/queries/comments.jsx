@@ -8,7 +8,7 @@ from '@tanstack/react-query'
 import api from '../../api.jsx'
 
 
-export const useGetComments = (postId,enabled,pageSize) => {
+export const useGetComments = (postId,pageSize) => {
   return useInfiniteQuery({
     queryKey:['post',postId,'comments'],
     queryFn:async({pageParam = 1}) => {
@@ -18,7 +18,6 @@ export const useGetComments = (postId,enabled,pageSize) => {
     getNextPageParam:(lastPage,page) => {
       return lastPage.next? lastPage.current_page + 1: undefined
     },
-    enabled: enabled && enabled
   })
 }
 

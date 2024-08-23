@@ -54,7 +54,22 @@ const router = createBrowserRouter([
   ])
   
 const client = new QueryClient()
-const theme = createTheme()
+const theme = createTheme({
+  palette:{
+    primary:{
+      main:'#344966',
+      light:'#B4CDED',
+      dark:'#0D1821'
+    },
+    background:{
+      default:'#B4CDED',
+      paper:'#B4CDED',
+    }
+  },
+  typography:{
+    fontFamily:'Montserrat'
+  }
+})
 
 function App() {
   return (

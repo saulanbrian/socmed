@@ -14,14 +14,22 @@ import UserInfo from '../components/userInfo.jsx'
 
 const StyledBox = styled(Box)(({theme}) => ({
   display:'flex',
-  flexWrap:'wrap',
+  backgroundColor:theme.palette.primary.dark,
+  flexWrap:'nowrap',
+  padding:8,
+  justifyContent:'center',
+  gap:8,
+  [theme.breakpoints.down('sm')]:{
+    flexWrap:'wrap'
+  }
 }))
 
 const PostBox = styled(Box)(({theme}) => ({
   maxHeight:'100vh',
   overflow:'auto',
   background:'grey',
-  maxWidth:500
+  flexGrow:1,
+  maxWidth:'40vw'
 }))
 
 

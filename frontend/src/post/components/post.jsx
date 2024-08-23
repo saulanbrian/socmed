@@ -31,26 +31,31 @@ import './post.css'
 import { useAuthContext } from '../../authentication/context/authContext.jsx';
 
 
-const StyledCard = styled(Card)({
+const StyledCard = styled(Card)(({theme}) => ({
   boxShadow:'none',
-  marginBottom:3,
-})
+  padding:'1rem',
+  display:'flex',
+  flexDirection:'column',
+  gap:'4px'
+}))
 
-const StyledCardActions = styled(CardActions)({
-  borderTop:'1px solid #353535cf',
-  borderBottom:'1px solid #353535cf',
-  padding:1,
+const StyledCardActions = styled(CardActions)(({theme}) =>({
+  padding:'0.25rem',
+  display:'flex',
+  justifyContent:'space-around',
   '& > *':{
-    flex:1
+    flex:1,
+    padding:0
   }
-})
+}))
 
 const StyledButton = styled(Button)({
-  fontWeight:'Light',
+  fontWeight:500,
   textTransform:'none'
 })
 
 const titleProps = {
+  fontWeight:'520',
   fontSize:'1rem'
 }
 
@@ -104,19 +109,20 @@ export default function Post({caption, id, isLiked, likeCounts, image, authorPro
   
   return (
     <StyledCard component={Box}>
-      <CardHeader 
-        sx={{padding:1}}
-        avatar={<Avatar src={baseUrl + authorProfile} sx={{cursor:'pointer'}}/>}
+      <CardHeader
+        sx={{padding:'0.25rem'}}
+        avatar={<Avatar src={baseUrl + authorProfile} sx={{cursor:'pointer'}} onClick={() => navigate(`/${authorId}`)} />}
         title={authorName}
-        subheader='dxample'
         titleTypographyProps={titleProps}
-        onClick={ () => navigate(`/${authorId}`) }
         />
-      <CardContent sx={{padding:'10px',margin:0}}>
-        <Typography align='left' variant='body2'>
-          { caption }
-        </Typography>
-      </CardContent>
+      { caption && (
+        <CardContent sx={{padding:'0.25rem'}}>
+          <Typography align='left' variant='body2'>
+            { caption }
+          </Typography>
+        </CardContent>
+      ) }
+
       { 
         image && (
           <CardMedia 
@@ -126,27 +132,24 @@ export default function Post({caption, id, isLiked, likeCounts, image, authorPro
             />
         )
       }
-      <StyledCardActions >
+
+      <StyledCardActions>
         <StyledButton 
           color={liked? 'primary': 'inherit'}
           onClick={handleClick} 
           disabled={unliking || liking}
-          startIcon={ liked? (
-            <FavoriteSharpIcon/>
-            ): (
-            <FavoriteBorderSharpIcon/>
-            )
-          }>
-          { likes }
+          startIcon={ liked? <FavoriteSharpIcon/> : <FavoriteBorderSharpIcon/> }
+          disableElevation>
+            { likes }
         </StyledButton>
         <CommentButton 
           postId={id} 
           clickFn={collapseComment && handleCollapse}/>
-        <StyledButton color='inherit' startIcon={<ShareSharpIcon/>}>
+        <StyledButton color='inherit' startIcon={<ShareSharpIcon/>} disableElevation>
           share
         </StyledButton>
       </StyledCardActions>
-      { collapseComment && <CommentCollapse isIn={collapse} postId={id}/> }
+      { collapseComment && collapse && <CommentCollapse isIn={collapse} postId={id}/> }
     </StyledCard>
     )
 }

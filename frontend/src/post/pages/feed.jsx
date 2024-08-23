@@ -8,7 +8,6 @@ import { useInfinitePosts } from '../queries/posts.jsx'
 
 import Post from '../components/post.jsx'
 import LikedPostContainer from '../components/likedpostscontainer.jsx'
-import PostCreationButton from '../components/postcreationbutton.jsx'
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { useEffect } from 'react'
@@ -16,10 +15,14 @@ import { useEffect } from 'react'
 
 const StyledBox = styled(Box)(({theme}) => ({
   height:'100vh',
-  maxHeight:'90vh',
+  maxHeight:'100%',
   overflow:'auto',
-  paddingBottom:'20px',
-  paddingTop:5
+  borderRadius:4,
+  '::-webkit-scrollbar': {
+    display: 'none',
+  },
+  msOverflowStyle: 'none',
+  scrollbarWidth: 'none',
 }))
 
 
@@ -61,7 +64,8 @@ function Feed(){
         hasMore={hasNextPage}
         loader={<p>loading...</p>}
         endMessage={<p>no more data</p>}
-        scrollableTarget='scrollableDiv'>
+        scrollableTarget='scrollableDiv'
+        style={{ display: 'flex', flexDirection: 'column', gap:8 }}>
           { data.pages.map((page) => {
             return page.results.map((post) =>(
                  <Post 
@@ -78,7 +82,6 @@ function Feed(){
               ))
           }) }
         </InfiniteScroll>
-        <PostCreationButton />
     </StyledBox>
     ): isFetching? <p>wait a minute</p>: <p>no post</p>
   
